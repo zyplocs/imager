@@ -1,8 +1,8 @@
-import XCTest
+import Testing
 import CoreImage
-@testable import Imager // <- replace with your actual module name if different
+@testable import Imager
 
-final class HistogramCalculatorTests: XCTestCase {
+struct HistogramCalculatorTests {
     let calculator = HistogramCalculator()
 
     // Helper: create a solid color CIImage in linear sRGB (approx via RGB initializer)
@@ -24,33 +24,39 @@ final class HistogramCalculatorTests: XCTestCase {
         return grad.cropped(to: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
     }
 
-    func testSolidBlack() async throws {
+    @Test func solidBlack() async throws {
         let img = solidCIImage(gray: 0.0)
         let hist = try await calculator.compute(from: img, bins: 256)
+
         let sum = hist.reduce(0, +)
-        XCTAssertLessThan(abs(sum - 1.0), 1e-3)
-        let maxIndex = hist.enumerated().max(by: { $0.element < $1.element })!.offset
-        XCTAssertEqual(maxIndex, 0)
-        XCTAssertGreaterThan(hist[0], 0.9)
+        #expect(abs(sum - 1.0) < 1e-3)
+
+        let maxPair = try #require(hist.enumerated().max(by: { $0.element < $1.element }))
+        #expect(maxPair.offset == 0)
+        #expect(hist[0] > 0.9)
     }
 
-    func testSolidWhite() async throws {
+    @Test func solidWhite() async throws {
         let img = solidCIImage(gray: 1.0)
         let hist = try await calculator.compute(from: img, bins: 256)
+
         let sum = hist.reduce(0, +)
-        XCTAssertLessThan(abs(sum - 1.0), 1e-3)
-        let maxIndex = hist.enumerated().max(by: { $0.element < $1.element })!.offset
-        XCTAssertEqual(maxIndex, 255)
-        XCTAssertGreaterThan(hist[255], 0.9)
+        #expect(abs(sum - 1.0) < 1e-3)
+
+        let maxPair = try #require(hist.enumerated().max(by: { $0.element < $1.element }))
+        #expect(maxPair.offset == 255)
+        #expect(hist[255] > 0.9)
     }
 
-    func testGradient() async throws {
+    @Test func gradient() async throws {
         let img = gradientImage(width: 256, height: 64)
         let hist = try await calculator.compute(from: img, bins: 256)
+
         let sum = hist.reduce(0, +)
-        XCTAssertLessThan(abs(sum - 1.0), 1e-3)
-        let minVal = hist.min() ?? 0
-        let maxVal = hist.max() ?? 0
-        XCTAssertLessThan(maxVal / max(minVal, 1e-6), 2.5)
+        #expect(abs(sum - 1.0) < 1e-3)
+
+        let minVal = try #require(hist.min())
+        let maxVal = try #require(hist.max())
+        #expect(maxVal / max(minVal, 1e-6) < 2.5)
     }
 }
