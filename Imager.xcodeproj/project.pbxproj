@@ -6,11 +6,27 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		C18C04472F0F0CFF00D43F12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C1FE9E312F08BB9F004825EF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C1FE9E382F08BB9F004825EF;
+			remoteInfo = Imager;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		C18C04432F0F0CFF00D43F12 /* ImagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1FE9E392F08BB9F004825EF /* Imager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Imager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		C18C04442F0F0CFF00D43F12 /* ImagerTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = ImagerTests;
+			sourceTree = "<group>";
+		};
 		C1FE9E3B2F08BB9F004825EF /* Imager */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Imager;
@@ -19,6 +35,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C18C04402F0F0CFF00D43F12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1FE9E362F08BB9F004825EF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				C1FE9E3B2F08BB9F004825EF /* Imager */,
+				C18C04442F0F0CFF00D43F12 /* ImagerTests */,
 				C1FE9E3A2F08BB9F004825EF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				C1FE9E392F08BB9F004825EF /* Imager.app */,
+				C18C04432F0F0CFF00D43F12 /* ImagerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +73,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C18C04422F0F0CFF00D43F12 /* ImagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C18C04492F0F0CFF00D43F12 /* Build configuration list for PBXNativeTarget "ImagerTests" */;
+			buildPhases = (
+				C18C043F2F0F0CFF00D43F12 /* Sources */,
+				C18C04402F0F0CFF00D43F12 /* Frameworks */,
+				C18C04412F0F0CFF00D43F12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C18C04482F0F0CFF00D43F12 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C18C04442F0F0CFF00D43F12 /* ImagerTests */,
+			);
+			name = ImagerTests;
+			packageProductDependencies = (
+			);
+			productName = ImagerTests;
+			productReference = C18C04432F0F0CFF00D43F12 /* ImagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C1FE9E382F08BB9F004825EF /* Imager */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C1FE9E442F08BBA1004825EF /* Build configuration list for PBXNativeTarget "Imager" */;
@@ -80,6 +128,10 @@
 				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					C18C04422F0F0CFF00D43F12 = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = C1FE9E382F08BB9F004825EF;
+					};
 					C1FE9E382F08BB9F004825EF = {
 						CreatedOnToolsVersion = 26.2;
 					};
@@ -100,11 +152,19 @@
 			projectRoot = "";
 			targets = (
 				C1FE9E382F08BB9F004825EF /* Imager */,
+				C18C04422F0F0CFF00D43F12 /* ImagerTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C18C04412F0F0CFF00D43F12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1FE9E372F08BB9F004825EF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +175,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C18C043F2F0F0CFF00D43F12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C1FE9E352F08BB9F004825EF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +191,57 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C18C04482F0F0CFF00D43F12 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C1FE9E382F08BB9F004825EF /* Imager */;
+			targetProxy = C18C04472F0F0CFF00D43F12 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		C18C044A2F0F0CFF00D43F12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V53226ZKQG;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.elij.ImagerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Imager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Imager";
+			};
+			name = Debug;
+		};
+		C18C044B2F0F0CFF00D43F12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = V53226ZKQG;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.personal.elij.ImagerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Imager.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Imager";
+			};
+			name = Release;
+		};
 		C1FE9E422F08BBA1004825EF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -313,6 +430,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C18C04492F0F0CFF00D43F12 /* Build configuration list for PBXNativeTarget "ImagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C18C044A2F0F0CFF00D43F12 /* Debug */,
+				C18C044B2F0F0CFF00D43F12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C1FE9E342F08BB9F004825EF /* Build configuration list for PBXProject "Imager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
