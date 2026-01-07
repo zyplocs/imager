@@ -7,6 +7,7 @@
 
 import SwiftUI
 import PhotosUI
+import CoreImage
 
 struct ContentView: View {
     @State private var selectedItem: PhotosPickerItem?
@@ -14,6 +15,8 @@ struct ContentView: View {
     @State private var histogramData: [Float] = []
     @State private var isCalculating: Bool = false
     @State private var errorMessage: String?
+    
+    @State private var calculator = HistogramCalculator()
     
     var body: some View {
         NavigationStack{
@@ -69,7 +72,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .onChange(of: selectedItem) {_, newItem in
+            .onChange(of: selectedItem) { _, newItem in
                 guard let newItem else { return }
                 
                 Task {
@@ -78,15 +81,24 @@ struct ContentView: View {
                     
                     do {
                         if let data = try await newItem.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
+                           let uiImage = UIImage(data: data),
+                           let ciImage = CIImage(image: uiImage) {
+                            
                             self.selectedImage = uiImage
                             
+                            // Prepare Orientation
+                            let orientation = uiImage.imageOrientation.exifOrientation
+                            let orientedImage = ciImage.oriented(forExifOrientation: orientation)
                             // Perform Calculation in Background as Detached Task
-                            let histogram = try await computeHistogramInBackground(image: uiImage)
+                            let histogram = try await calculator.compute(from: orientedImage)
                             
                             withAnimation {
                                 self.histogramData = histogram
                             }
+
+                            print("count:", histogramData.count,
+                                  "sum:", histogramData.reduce(0,+),
+                                  "max:", histogramData.max() ?? -1)
                         }
                     } catch {
                         self.errorMessage = "Failed to process image: \(error.localizedDescription)"
@@ -97,16 +109,25 @@ struct ContentView: View {
             }
         }
     }
-    
-    // Helper to bridge the synchronous calculation to an async background context
-    private func computeHistogramInBackground(image: UIImage) async throws -> [Float] {
-        return try await Task.detached(priority: .userInitiated) {
-            return try await luminanceHistogram(from: image)
-        }.value
-    }
 }
 
 
+extension UIImage.Orientation {
+    /// Matches CGImagePropertyOrientation / EXIF orientation codes.
+    var exifOrientation: Int32 {
+        switch self {
+        case .up: return 1
+        case .upMirrored: return 2
+        case .down: return 3
+        case .downMirrored: return 4
+        case .leftMirrored: return 5
+        case .right: return 6
+        case .rightMirrored: return 7
+        case .left: return 8
+        @unknown default: return 1
+        }
+    }
+}
 
 #Preview {
     ContentView()
