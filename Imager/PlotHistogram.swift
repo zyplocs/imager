@@ -10,25 +10,54 @@ struct HistogramBin: Identifiable {
 struct HistogramChartView: View {
     let bins: [Float]
 
-    var chartData: [HistogramBin] {
+    private var chartData: [HistogramBin] {
         bins.enumerated().map { i, v in
-            HistogramBin(index: i, value: Double(v))
+            HistogramBin(index: i, value: Double(v) * 100.0)
         }
     }
+    
+    private var xMax: Int { max(1, bins.count - 1) }
+    private var yMax: Double { chartData.map(\.value).max() ?? 0 }
 
     var body: some View {
-        Chart(chartData) { b in
-            BarMark(
-                x: .value("Bin", b.index),
-                y: .value("Probability", b.value)
-            )
+        Group {
+            if bins.isEmpty {
+                ContentUnavailableView(
+                    "No histogram yet",
+                    systemImage: "chart.bar.axis",
+                    description: Text("Pick an image to compute a histogram.")
+                )
+            } else {
+                Chart(chartData) { b in
+                    AreaMark(
+                        x: .value("Luminance", b.index),
+                        y: .value("Frequency", b.value)
+                    )
+                    .foregroundStyle(
+                        .linearGradient(
+                            colors: [.blue.opacity(0.3), .blue.opacity(0.6)],
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                    )
+                    .interpolationMethod(.catmullRom)  // smooths the curve slightly
+                    
+                    // Add a line on top for definition
+                    LineMark(
+                        x: .value("Luminance", b.index),
+                        y: .value("Frequency", b.value)
+                    )
+                    .foregroundStyle(.blue)
+                    .interpolationMethod(.catmullRom)
+                }
+                .chartXScale(domain: 0...xMax)
+                .chartYScale(domain: 0...(max(yMax * 1.05, 0.001)))
+                .chartYAxis { AxisMarks(position: .leading) }
+                .chartXAxisLabel("Brightness (0-255)")
+                .chartYAxisLabel("Pixels (%)")
+            }
         }
         .frame(height: 220)
         .padding()
     }
-}
-
-
-#Preview {
-    HistogramChartView(bins: [512])
 }
