@@ -35,19 +35,18 @@ struct HistogramChartView: View {
                     )
                     .foregroundStyle(
                         .linearGradient(
-                            colors: [.blue.opacity(0.3), .blue.opacity(0.6)],
+                            colors: [.gray.opacity(0.3), .gray.opacity(0.6)],
                             startPoint: .bottom,
                             endPoint: .top
                         )
                     )
-                    .interpolationMethod(.catmullRom)  // smooths the curve slightly
-                    
-                    // Add a line on top for definition
+                    .interpolationMethod(.catmullRom)  // Smooths the curve slightly
+                
                     LineMark(
                         x: .value("Luminance", b.index),
                         y: .value("Frequency", b.value)
                     )
-                    .foregroundStyle(.blue)
+                    .foregroundStyle(.gray)
                     .interpolationMethod(.catmullRom)
                 }
                 .chartXScale(domain: 0...xMax)

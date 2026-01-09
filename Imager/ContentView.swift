@@ -86,19 +86,20 @@ struct ContentView: View {
                             
                             self.selectedImage = uiImage
                             
-                            // Prepare Orientation
+                            // Orientation
                             let orientation = uiImage.imageOrientation.exifOrientation
                             let orientedImage = ciImage.oriented(forExifOrientation: orientation)
-                            // Perform Calculation in Background as Detached Task
+                            // Perform the calculation in background as a detached task
                             let histogram = try await calculator.compute(from: orientedImage)
                             
                             withAnimation {
                                 self.histogramData = histogram
                             }
 
-                            print("count:", histogramData.count,
-                                  "sum:", histogramData.reduce(0,+),
-                                  "max:", histogramData.max() ?? -1)
+                            // Print statement to assist console debugging
+//                            print("count:", histogramData.count,
+//                                  "sum:", histogramData.reduce(0,+),
+//                                  "max:", histogramData.max() ?? -1)
                         }
                     } catch {
                         self.errorMessage = "Failed to process image: \(error.localizedDescription)"

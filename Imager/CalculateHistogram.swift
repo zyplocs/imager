@@ -10,7 +10,7 @@ actor HistogramCalculator {
     // Cache the context to avoid recreating it
     private let context = CIContext()
     
-    /// Asynchronously calculates the luminance histogram
+    /// Asynchronously calculate the luminance histogram
     func compute(from inputImage: CIImage, bins: Int = 256) throws -> [Float] {
         // Convert to Grayscale
         /// Use a matrix to map *RGB* to standard Rec.709 luminance
@@ -23,7 +23,6 @@ actor HistogramCalculator {
         ])
         
         // Set-up Histogram Filter
-        /// Normalize so the total area = 1.0 (pixels / totalPixels)
         let extent = luma.extent.integral
         let pixelCount = Float(extent.width * extent.height)
         // Use raw counts from the filter; we'll normalize after reading
