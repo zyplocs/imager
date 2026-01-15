@@ -80,8 +80,8 @@ struct ContentView: View {
                     errorMessage = nil
                     
                     do {
-                        if let data = try await newItem.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data),
+                        if let selection = try await newItem.loadTransferable(type: Data.self),
+                           let uiImage = UIImage(data: selection),
                            let ciImage = CIImage(image: uiImage) {
                             
                             self.selectedImage = uiImage
