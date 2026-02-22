@@ -8,13 +8,13 @@ actor HistogramCalculator {
     }
     
     // Cache the context to avoid recreating it
-    private let context = CIContext()
+    private let context: CIContext = CIContext()
     
     /// Asynchronously calculate the luminance histogram
     func compute(from inputImage: CIImage, bins: Int = 256) throws -> [Float] {
         // Convert to Grayscale
         /// Use a matrix to map *RGB* to standard Rec.709 luminance
-        let luma = inputImage.applyingFilter("CIColorMatrix", parameters: [
+        let luma: CIImage = inputImage.applyingFilter("CIColorMatrix", parameters: [
             "inputRVector": CIVector(x: 0.2126, y: 0.7152, z: 0.0722, w: 0),
             "inputGVector": CIVector(x: 0.2126, y: 0.7152, z: 0.0722, w: 0),
             "inputBVector": CIVector(x: 0.2126, y: 0.7152, z: 0.0722, w: 0),
@@ -23,12 +23,12 @@ actor HistogramCalculator {
         ])
         
         // Set-up Histogram Filter
-        let extent = luma.extent.integral
-        let pixelCount = Float(extent.width * extent.height)
+        let extent: CGRect = luma.extent.integral
+        let pixelCount: Float = Float(extent.width * extent.height)
         // Use raw counts from the filter; we'll normalize after reading
         let scale: Float = 1.0
         
-        guard let filter = CIFilter(name: "CIAreaHistogram") else {
+        guard let filter: CIFilter = CIFilter(name: "CIAreaHistogram") else {
             throw HistogramError.couldNotMakeFilter
         }
         filter.setValue(luma, forKey: kCIInputImageKey)
@@ -36,15 +36,15 @@ actor HistogramCalculator {
         filter.setValue(bins, forKey: "inputCount")
         filter.setValue(scale, forKey: "inputScale")
         
-        guard let histImage = filter.outputImage else {
+        guard let histImage: CIImage = filter.outputImage else {
             throw HistogramError.noOutputImage
         }
         
         // Render to CGImage...a 256×1 image
-        let bounds = CGRect(x: 0, y: 0, width: bins, height: 1)
+        let bounds: CGRect = CGRect(x: 0, y: 0, width: bins, height: 1)
         
         // Force Float32 output
-        guard let cgImage = context.createCGImage(
+        guard let cgImage: CGImage = context.createCGImage(
             histImage,
             from: bounds,
             format: .RGBAf,
@@ -54,17 +54,17 @@ actor HistogramCalculator {
         }
         
         // Read Pixel Data
-        guard let data = cgImage.dataProvider?.data,
-              let ptr = CFDataGetBytePtr(data) else {
+        guard let data: CFData = cgImage.dataProvider?.data,
+              let ptr: UnsafePointer<UInt8> = CFDataGetBytePtr(data) else {
             throw HistogramError.renderingFailed
         }
         
         // Extract Red Channel
         var result: [Float] = [Float](repeating: 0, count: bins)
         
-        let floatPtr = ptr.withMemoryRebound(to: Float.self, capacity: bins * 4) { $0 }
+        let floatPtr: UnsafePointer<Float> = ptr.withMemoryRebound(to: Float.self, capacity: bins * 4) { $0 }
 
-        for i in 0..<bins {
+        for i: Int in 0..<bins {
             result[i] = floatPtr[i * 4]
         }
         
