@@ -25,7 +25,6 @@ actor HistogramCalculator {
         // Set-up Histogram Filter
         let extent: CGRect = luma.extent.integral
         let pixelCount: Float = Float(extent.width * extent.height)
-        // Use raw counts from the filter; we'll normalize after reading
         let scale: Float = 1.0
         
         guard let filter: CIFilter = CIFilter(name: "CIAreaHistogram") else {
