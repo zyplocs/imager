@@ -2,7 +2,7 @@ import SwiftUI
 import Charts
 
 struct HistogramBin: Identifiable {
-    let id = UUID()
+    let id: UUID = UUID()
     let index: Int
     let value: Double
 }

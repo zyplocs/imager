@@ -16,13 +16,13 @@ struct ContentView: View {
     @State private var isCalculating: Bool = false
     @State private var errorMessage: String?
     
-    @State private var calculator = HistogramCalculator()
+    @State private var calculator: HistogramCalculator = HistogramCalculator()
     
     var body: some View {
         NavigationStack{
             VStack {
                 // Image Viewer
-                if let selectedImage {
+                if let selectedImage: UIImage {
                     Image(uiImage: selectedImage)
                         .resizable()
                         .scaledToFit()
@@ -50,7 +50,7 @@ struct ContentView: View {
                     HistogramChartView(bins: histogramData)
                         .padding()
                         .transition(.blurReplace)
-                } else if let errorMessage {
+                } else if let errorMessage: String {
                     Text(errorMessage)
                         .font(.caption)
                         .foregroundStyle(.red)
@@ -73,7 +73,7 @@ struct ContentView: View {
                 }
             }
             .onChange(of: selectedItem) { _, newItem in
-                guard let newItem else { return }
+                guard let newItem: PhotosPickerItem else { return }
                 
                 Task {
                     isCalculating = true
