@@ -35,7 +35,7 @@ struct HistogramChartView: View {
                     )
                     .foregroundStyle(
                         .linearGradient(
-                            colors: [.gray.opacity(0.3), .gray.opacity(0.6)],
+                            colors: [.gray.opacity(0.3), .pink.opacity(0.6)],
                             startPoint: .bottom,
                             endPoint: .top
                         )
